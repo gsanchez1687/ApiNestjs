@@ -1,10 +1,11 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable,HttpException, HttpStatus } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { User } from './user.entity';
 import { Repository } from 'typeorm';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
 import * as bcrypt from 'bcrypt';
+import { exit } from 'process';
 
 @Injectable()
 export class UsersService {
@@ -13,10 +14,25 @@ export class UsersService {
 
     //crear un usuario
     async createUser(User: CreateUserDto): Promise<User> {
-        const saltRounds = bcrypt.genSaltSync(10);
-        const hashedPassword = await bcrypt.hash(User.password, saltRounds);
-        const newUser = this.usersRepository.create({...User, password: hashedPassword});
-        return this.usersRepository.save(newUser);
+        try {
+            const user = await this.usersRepository.findOne({
+                where: [
+                    { email: User.email },
+                    { username: User.username }
+                ]
+            });
+            if (user) {
+                throw new HttpException('User already exists', HttpStatus.CONFLICT);
+            }else{
+                const saltRounds = bcrypt.genSaltSync(10);
+                const hashedPassword = await bcrypt.hash(User.password, saltRounds);
+                const newUser = this.usersRepository.create({...User, password: hashedPassword});
+                return this.usersRepository.save(newUser);
+            }
+        }
+        catch (error) {
+            throw new HttpException('User already exists', HttpStatus.CONFLICT);
+        }
     }
 
     //listar todos los usuarios

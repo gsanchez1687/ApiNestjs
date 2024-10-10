@@ -18,22 +18,22 @@ export class User {
     @Column( { length: 100, nullable: true })
     second_surname: string;
 
-    @Column( { length: 100 })
+    @Column( { length: 100, unique: true })
     email: string;
 
     @Column({ nullable: true})
     email_verified_at: Date;
 
-    @Column( { length: 100 })
+    @Column({ length: 100, unique: true })
     username: string;
 
     @Column( { length: 100 })
     password: string;
 
-    @Column( { length: 100 })
+    @Column( { length: 20 })
     phone: string;
 
-    @Column( { length: 100 })
+    @Column( { length: 500 })
     address: string;
 
     @Column( { length: 100, nullable: true })
