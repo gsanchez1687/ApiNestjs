@@ -1,4 +1,4 @@
-import { Controller, Post, Get, Body, Logger } from '@nestjs/common';
+import { Controller, Post, Get, Delete, Param, ParseIntPipe, Body, Logger } from '@nestjs/common';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UsersService } from './users.service';
 import { get } from 'http';
@@ -24,7 +24,17 @@ export class UsersController {
 
     //listar un usuario
     @Get(':id')
-    getUserById(@Body() id: number) {
+    getUserById(@Param('id', ParseIntPipe) id:number ) {
+        console.log('id', id);
+        console.log('id', typeof id);
         return this.usersService.getUserById(id);
+    }
+
+    //eliminar un usuario
+    @Delete(':id')
+    deleteUserById(@Param('id', ParseIntPipe) id:number ) {
+        console.log('id', id);
+        console.log('id', typeof id);
+        return this.usersService.deleteUserById(id);
     }
 }

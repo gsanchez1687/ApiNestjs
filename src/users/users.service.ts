@@ -25,6 +25,13 @@ export class UsersService {
 
     //listar un usuario por id
     async getUserById(id: number) {
-        return this.usersRepository.findOne(id);
+        return this.usersRepository.findOne({
+            where: { id }
+        });
+    }
+
+    //eliminar un usuario por id
+    async deleteUserById(id: number){
+        return this.usersRepository.delete({ id });
     }
 }
