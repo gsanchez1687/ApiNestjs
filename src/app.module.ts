@@ -3,6 +3,9 @@ import { ProductsModule } from './products/products.module';
 import { ShopsModule } from './shops/shops.module';
 import { UsersModule } from './users/users.module';
 import { TypeOrmModule } from '@nestjs/typeorm';
+import { StatusModule } from './status/status.module';
+import { CategoriesModule } from './categories/categories.module';
+import { ProductsImagesModule } from './products_images/products_images.module';
 
 @Module({
   imports: [TypeOrmModule.forRoot({
@@ -17,6 +20,9 @@ import { TypeOrmModule } from '@nestjs/typeorm';
   }),
   ProductsModule,
   ShopsModule,
-  UsersModule],
+  UsersModule,
+  StatusModule,
+  CategoriesModule,
+  ProductsImagesModule],
 })
 export class AppModule {}

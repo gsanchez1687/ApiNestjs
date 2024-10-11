@@ -12,7 +12,6 @@ export class UsersController {
     //crear usuario
     @Post()
     createUser(@Body() newUser: CreateUserDto) {
-        this.logger.log(`Creating a new user: ${JSON.stringify(newUser)}`);
        return this.usersService.createUser(newUser);
     }
 
@@ -25,16 +24,12 @@ export class UsersController {
     //listar un usuario
     @Get(':id')
     getUserById(@Param('id', ParseIntPipe) id:number ) {
-        console.log('id', id);
-        console.log('id', typeof id);
         return this.usersService.getUserById(id);
     }
 
     //eliminar un usuario
     @Delete(':id')
     deleteUserById(@Param('id', ParseIntPipe) id:number ) {
-        console.log('id', id);
-        console.log('id', typeof id);
         return this.usersService.deleteUserById(id);
     }
 
